@@ -16,7 +16,7 @@ public class CategoriaResource {
 //	@RequestMapping(method=RequestMethod.GET)
 	@GetMapping
 	public List<Categoria> listar() {
-		System.out.println("Testando o Rest");
+		System.out.println(">>>>> Rest lista de Categorias");
 		
 		Categoria cat1 = new Categoria((long) 1, "Informática");
 		Categoria cat2 = new Categoria((long) 2, "Escritório");
