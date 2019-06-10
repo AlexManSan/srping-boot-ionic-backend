@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 /**
  * Classe de dominio
  * @author Alex
@@ -24,6 +26,7 @@ public class Categoria implements Serializable {
 	private Long id;
 	private String nome;
 	
+	@JsonManagedReference // quero que venha os objetos associados 
 	@ManyToMany(mappedBy="categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	

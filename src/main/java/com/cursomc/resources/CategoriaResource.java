@@ -38,9 +38,14 @@ public class CategoriaResource {
 	
 	@GetMapping(value="/{id}")
 	public ResponseEntity<?> find(@PathVariable Long id) {
+//		try {
 		
 		System.out.println(">>>>> Rest busca uma Categoria por id");
 		Categoria obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
+		
+//		}catch (Exception e) {
+//			// TODO: handle exception
+//		}
 	}
 }
