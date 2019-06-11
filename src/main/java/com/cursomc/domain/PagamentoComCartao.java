@@ -1,0 +1,40 @@
+package com.cursomc.domain;
+
+import javax.persistence.Entity;
+
+import com.cursomc.domain.enums.EstadoPagamento;
+
+@Entity
+public class PagamentoComCartao extends Pagamento{
+	private static final long serialVersionUID = 1L;
+
+	private Integer numeroDeParcelas;
+	
+	/**
+	 * Construtor Vazio
+	 */
+	public PagamentoComCartao() {}
+
+	/**
+	 * Construtor completo com os da superclasse e o atributo desta
+	 * @param id
+	 * @param estado
+	 * @param pedido
+	 * @param numeroDeParcelas
+	 */
+	public PagamentoComCartao(Long id, EstadoPagamento estado, Pedido pedido, Integer numeroDeParcelas) {
+		super(id, estado, pedido);
+		this.numeroDeParcelas = numeroDeParcelas;
+	}
+
+	public Integer getNumeroDeParcelas() {
+		return numeroDeParcelas;
+	}
+
+	public void setNumeroDeParcelas(Integer numeroDeParcelas) {
+		this.numeroDeParcelas = numeroDeParcelas;
+	}
+	
+	
+	
+}
