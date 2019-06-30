@@ -2,7 +2,8 @@ package com.cursomc.resources;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,9 +38,7 @@ public class CategoriaResource {
 	@GetMapping
 	public ResponseEntity<List<CategoriaDTO>> findAll() { 
 		List<Categoria> list = service.findAll();
-		/* lista de CategoriaDTO, stream()= varre uma lista; map= efetua uma operação para cada elemento da lista; 
-		 * collect(Collectors.toList()) transforma em na lista nova do objeto novo */
-		List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		List<CategoriaDTO> listDto = CategoriaDTO.toCategoriaDTO(list);
 		return ResponseEntity.ok().body(listDto);
 	}
 	
@@ -91,7 +90,8 @@ public class CategoriaResource {
 	 * @return
 	 */
 	@PostMapping
-	public ResponseEntity<Void> insert(@RequestBody Categoria obj) {
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) {
+		Categoria obj = CategoriaDTO.toCategoria(objDto);
 		obj = service.insert(obj);
 		
 		// devolvendo a uri do objeto criado
