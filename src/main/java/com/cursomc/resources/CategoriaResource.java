@@ -1,8 +1,8 @@
 package com.cursomc.resources;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.cursomc.domain.Categoria;
+import com.cursomc.dto.CategoriaDTO;
 import com.cursomc.services.CategoriaService;
 
 @RestController
@@ -26,23 +27,22 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
 
-//	@RequestMapping(method=RequestMethod.GET)
+
+	/**
+	 * Lista os objetos
+	 * @return
+	 */
 	@GetMapping
-	public List<Categoria> listar() {
-		System.out.println(">>>>> Rest lista de Categorias");
-		
-		Categoria cat1 = new Categoria((long) 1, "Informática");
-		Categoria cat2 = new Categoria((long) 2, "Escritório");
-		
-		List<Categoria> lista = new ArrayList<Categoria>();
-		lista.add(cat1);
-		lista.add(cat2);
-	
-		return lista;
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		List<Categoria> list = service.findAll();
+		/* lista de CategoriaDTO, stream()= varre uma lista; map= efetua uma operação para cada elemento da lista; 
+		 * collect(Collectors.toList()) transforma em na lista nova do objeto novo */
+		List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
 	
 	/**
-	 * PEsquisa um Objeto com o id
+	 * Pesquisa um Objeto com o id
 	 * @param id
 	 * @return
 	 */

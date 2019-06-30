@@ -1,5 +1,6 @@
 package com.cursomc.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,14 @@ public class CategoriaService {
 
 	@Autowired
 	private CategoriaRepository dao;
+	
+	/**
+	 * Método lista todos os objetos
+	 * @return
+	 */
+	public List<Categoria> findAll(){
+		return dao.findAll();
+	}
 	
 	/**
 	 * Método busca o objeto no banco e dispara um excessão caso não exista
