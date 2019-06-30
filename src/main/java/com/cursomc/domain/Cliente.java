@@ -16,7 +16,6 @@ import javax.persistence.OneToMany;
 
 import com.cursomc.domain.enums.TipoCliente;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Cliente implements Serializable{
@@ -31,7 +30,6 @@ public class Cliente implements Serializable{
 	//modificado para integer
 	private Integer tipo;
 	
-	@JsonManagedReference // pode mostrar os endereços
 	@OneToMany(mappedBy="cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
