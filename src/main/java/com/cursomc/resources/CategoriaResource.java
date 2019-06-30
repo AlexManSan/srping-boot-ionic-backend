@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,7 +41,11 @@ public class CategoriaResource {
 		return lista;
 	}
 	
-	
+	/**
+	 * PEsquisa um Objeto com o id
+	 * @param id
+	 * @return
+	 */
 	@GetMapping(value="/{id}")
 	public ResponseEntity<Categoria> find(@PathVariable Long id) {
 //		try {
@@ -55,6 +60,7 @@ public class CategoriaResource {
 	}
 	
 	/**
+	 * Cria um Objeto 
 	 * void corpo vazio, @RequestBody já converte o json recebido em obj categoria
 	 * @param obj
 	 * @return
@@ -71,11 +77,28 @@ public class CategoriaResource {
 		return ResponseEntity.created(uri).build();
 	}
 	
+	/**
+	 * Atualiza um objeto
+	 * @param obj
+	 * @param id
+	 * @return
+	 */
 	@PutMapping(value="/{id}")
 	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Long id) {
 		obj.setId(id); // pra garantir que o id é o mesmo recebido
 		obj = service.update(obj);
-		
+		return ResponseEntity.noContent().build();
+	}
+	
+	/**
+	 * Deleta um objeto
+	 * @param obj
+	 * @param id
+	 * @return
+	 */
+	@DeleteMapping(value="/{id}")
+	public ResponseEntity<Void> delete(@PathVariable Long id) {
+		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 }
