@@ -24,4 +24,14 @@ public class CategoriaService {
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 
 	}
+	
+	/**
+	 * Cria uma nova categoria 
+	 * @param obj
+	 * @return
+	 */
+	public Categoria insert(Categoria obj) {
+		obj.setId(null); // se existir valor ao invés de criar será atualizado, logo forçando o novo
+		return dao.save(obj);
+	}
 }
