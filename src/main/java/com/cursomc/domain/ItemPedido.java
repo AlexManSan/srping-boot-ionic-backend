@@ -5,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 /**
  * Classe responsavel por registrar os itens dos pedidos com a chave composta do pedido e produto na outra 
  * classe ItemPedidoPK
@@ -16,6 +18,7 @@ public class ItemPedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 
+	@JsonIgnore
 	@EmbeddedId // por ser uma chave composta em outra classe
 	private ItemPedidoPK id = new ItemPedidoPK();
 	
@@ -50,6 +53,7 @@ public class ItemPedido implements Serializable {
 	 * 
 	 */
 	
+	@JsonIgnore
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
