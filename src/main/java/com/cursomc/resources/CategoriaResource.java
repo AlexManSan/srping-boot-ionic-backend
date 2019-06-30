@@ -33,7 +33,7 @@ public class CategoriaResource {
 	 * @return
 	 */
 	@GetMapping
-	public ResponseEntity<List<CategoriaDTO>> findAll() {
+	public ResponseEntity<List<CategoriaDTO>> findAll() { 
 		List<Categoria> list = service.findAll();
 		/* lista de CategoriaDTO, stream()= varre uma lista; map= efetua uma operação para cada elemento da lista; 
 		 * collect(Collectors.toList()) transforma em na lista nova do objeto novo */
