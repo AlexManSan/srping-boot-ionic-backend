@@ -15,7 +15,12 @@ public class PedidoService {
 	@Autowired
 	private PedidoRepository dao;
 	
-	public Pedido buscar(Long id) {
+	/**
+	 * Método busca o objeto no banco e dispara um excessão caso não exista
+	 * @param id
+	 * @return
+	 */
+	public Pedido find(Long id) {
 		// buscando por id e transformando em optional
 		Optional<Pedido> obj = dao.findById(id); 
 		

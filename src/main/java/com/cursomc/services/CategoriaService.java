@@ -15,23 +15,37 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository dao;
 	
-	public Categoria buscar(Long id) {
+	/**
+	 * Método busca o objeto no banco e dispara um excessão caso não exista
+	 * @param id
+	 * @return
+	 */
+	public Categoria find(Long id) {
 		// buscando por id e transformando em optional
 		Optional<Categoria> obj = dao.findById(id); 
 		
 		// retona a categoria ou uma exceção caso o id não exista 
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
-
 	}
 	
 	/**
-	 * Cria uma nova categoria 
+	 * Cria um novo objeto 
 	 * @param obj
 	 * @return
 	 */
 	public Categoria insert(Categoria obj) {
 		obj.setId(null); // se existir valor ao invés de criar será atualizado, logo forçando o novo
+		return dao.save(obj);
+	}
+	
+	/**
+	 * Atualiza o objeto 
+	 * @param obj
+	 * @return
+	 */
+	public Categoria update(Categoria obj) {
+		find(obj.getId());
 		return dao.save(obj);
 	}
 }

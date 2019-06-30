@@ -15,7 +15,12 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository dao;
 	
-	public Cliente buscar(Long id) {
+	/**
+	 * Método busca o objeto no banco e dispara um excessão caso não exista
+	 * @param id
+	 * @return
+	 */
+	public Cliente find(Long id) {
 		// buscando por id e transformando em optional
 		Optional<Cliente> obj = dao.findById(id); 
 		

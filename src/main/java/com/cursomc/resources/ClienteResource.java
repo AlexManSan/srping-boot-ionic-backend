@@ -18,9 +18,9 @@ public class ClienteResource {
 	private ClienteService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Long id) {	
+	public ResponseEntity<Cliente> find(@PathVariable Long id) {	
 		System.out.println(">>>>> Rest busca uma Cliente por id");
-		Cliente obj = service.buscar(id);
+		Cliente obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 }

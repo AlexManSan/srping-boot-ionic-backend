@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -41,11 +42,11 @@ public class CategoriaResource {
 	
 	
 	@GetMapping(value="/{id}")
-	public ResponseEntity<?> find(@PathVariable Long id) {
+	public ResponseEntity<Categoria> find(@PathVariable Long id) {
 //		try {
 		
 		System.out.println(">>>>> Rest busca uma Categoria por id");
-		Categoria obj = service.buscar(id);
+		Categoria obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 		
 //		}catch (Exception e) {
@@ -68,5 +69,13 @@ public class CategoriaResource {
 				.buildAndExpand(obj.getId())
 				.toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@PutMapping(value="/{id}")
+	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Long id) {
+		obj.setId(id); // pra garantir que o id é o mesmo recebido
+		obj = service.update(obj);
+		
+		return ResponseEntity.noContent().build();
 	}
 }
