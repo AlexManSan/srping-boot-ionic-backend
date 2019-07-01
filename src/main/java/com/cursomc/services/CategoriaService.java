@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.cursomc.domain.Categoria;
+import com.cursomc.dto.CategoriaDTO;
 import com.cursomc.exceptions.DataIntegrityException;
 import com.cursomc.exceptions.ObjectNotFoundException;
 import com.cursomc.repositories.CategoriaRepository;
@@ -59,8 +60,18 @@ public class CategoriaService {
 	 * @return
 	 */
 	public Categoria update(Categoria obj) {
-		find(obj.getId());
+		Categoria objbanco = find(obj.getId());
+		updateData(objbanco, obj);
 		return dao.save(obj);
+	}
+	
+	/**
+	 * Atualiza somente os valores novos vindo do DTO
+	 * @param objbanco
+	 * @param obj
+	 */
+	private void updateData(Categoria objbanco, Categoria obj) {
+		objbanco.setNome(obj.getNome());
 	}
 	
 	/**
@@ -91,4 +102,15 @@ public class CategoriaService {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return dao.findAll(pageRequest);
 	}
+	
+	/**
+	 * Transforma um objDto em obj
+	 * @param objDto
+	 * @return
+	 */
+	public Categoria fromDTO(CategoriaDTO objDto) {
+		return new Categoria(objDto.getId(), objDto.getNome());
+	}
+	
+	
 }

@@ -2,6 +2,7 @@ package com.cursomc.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -38,7 +39,9 @@ public class CategoriaResource {
 	@GetMapping
 	public ResponseEntity<List<CategoriaDTO>> findAll() { 
 		List<Categoria> list = service.findAll();
-		List<CategoriaDTO> listDto = CategoriaDTO.toCategoriaDTO(list);
+		/* lista de CategoriaDTO, stream()= varre uma lista; map= efetua uma operação para cada elemento da lista; 
+		 * collect(Collectors.toList()) transforma em na lista nova do objeto novo */
+		List<CategoriaDTO> listDto = list.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
 	}
 	
@@ -59,8 +62,6 @@ public class CategoriaResource {
 			@RequestParam(value="direction", defaultValue="ASC") String direction) { 
 		
 		Page<Categoria> list = service.findPage(page, linesPerPage, orderBy, direction);
-		/* lista de CategoriaDTO, stream()= varre uma lista; map= efetua uma operação para cada elemento da lista; 
-		 * collect(Collectors.toList()) transforma em na lista nova do objeto novo */
 		Page<CategoriaDTO> listDto = list.map(obj -> new CategoriaDTO(obj));
 		return ResponseEntity.ok().body(listDto);
 	}
@@ -91,7 +92,7 @@ public class CategoriaResource {
 	 */
 	@PostMapping
 	public ResponseEntity<Void> insert(@Valid @RequestBody CategoriaDTO objDto) {
-		Categoria obj = CategoriaDTO.toCategoria(objDto);
+		Categoria obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		
 		// devolvendo a uri do objeto criado

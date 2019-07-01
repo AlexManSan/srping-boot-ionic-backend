@@ -1,8 +1,6 @@
 package com.cursomc.dto;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotEmpty;
 
@@ -44,27 +42,6 @@ public class CategoriaDTO implements Serializable {
 
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
-	
-	/**
-	 * Retorna uma Categoria de uma CategoriaDTO
-	 * @param objDto
-	 * @return
-	 */
-	public static Categoria toCategoria(CategoriaDTO objDto) {
-		return new Categoria(objDto.getId(), objDto.getNome()); 
-	}
-	
-	/**
-	 * Recebe um lista de categoria e retorna uma lista de CategoriaDTO
-	 * @param lista
-	 * @return
-	 */
-	public static List<CategoriaDTO> toCategoriaDTO(List<Categoria> lista) {
-		/* lista de CategoriaDTO, stream()= varre uma lista; map= efetua uma operação para cada elemento da lista; 
-		 * collect(Collectors.toList()) transforma em na lista nova do objeto novo */
-		List<CategoriaDTO> listDto = lista.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
-		return listDto;
 	}
 	
 	
