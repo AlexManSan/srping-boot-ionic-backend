@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cursomc.domain.Cidade;
 import com.cursomc.domain.Cliente;
@@ -56,6 +57,7 @@ public class ClienteService {
 	 * @param obj
 	 * @return
 	 */
+	@Transactional // garante que vai salvar tanto o cliente quanto os endereços na mesma transação do banco de dados
 	public Cliente insert(Cliente obj) {
 		obj.setId(null); // se existir valor ao invés de criar será atualizado, logo forçando o novo
 		obj = dao.save(obj);
@@ -96,7 +98,7 @@ public class ClienteService {
 		}
 		catch (DataIntegrityViolationException e) {
 			// personalizo a minha exception
-			throw new DataIntegrityException("Não é possível excluir porque há entidades relacionadas");
+			throw new DataIntegrityException("Não é possível excluir porque há pedidos relacionadas");
 		}		
 	}
 	
