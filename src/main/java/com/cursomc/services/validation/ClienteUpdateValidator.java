@@ -36,7 +36,7 @@ public class ClienteUpdateValidator implements ConstraintValidator<ClienteUpdate
 	@Override
 	public boolean isValid(ClienteDTO objDto, ConstraintValidatorContext context) {
 		
-		@SuppressWarnings("unused") // pegando o id digitado na url para identificar o objeto que está sendo atualizado
+		@SuppressWarnings("unchecked")
 		Map<String, String> map = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
 		// pegando o valor da url e atribuindo a variavel criada
 		Integer uriId = Integer.parseInt(map.get("id"));
