@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cursomc.domain.ItemPedido;
 import com.cursomc.domain.PagamentoComBoleto;
@@ -33,6 +34,9 @@ public class PedidoService {
 	@Autowired
 	private ProdutoService produtoService;
 	
+	@Autowired
+	private ClienteService clienteService;
+	
 	/**
 	 * Método busca o objeto no banco e dispara um excessão caso não exista
 	 * @param id
@@ -53,9 +57,12 @@ public class PedidoService {
 	 * @param obj
 	 * @return
 	 */
+	@Transactional
 	public Pedido insert(Pedido obj) {
 		obj.setId(null);
 		obj.setInstante(new Date());
+		obj.setCliente(clienteService.find(obj.getCliente().getId()));
+		
 		obj.getPagamento().setEstado(EstadoPagamento.PENDENTE);
 		obj.getPagamento().setPedido(obj);
 		
@@ -67,11 +74,12 @@ public class PedidoService {
 		pagRepo.save(obj.getPagamento());
 		for (ItemPedido ip : obj.getItens()) {
 			ip.setDesconto(0.0);
-			// interessante o método busca por id e aqui ele consegue buscar passando o preço
-			ip.setPreco(produtoService.find(ip.getProduto().getId()).getPreco());
+			ip.setProduto(produtoService.find(ip.getProduto().getId()));
+			ip.setPreco(ip.getProduto().getPreco());
 			ip.setPedido(obj);
 		}
 		itemRepo.saveAll(obj.getItens());
+		System.out.println(obj);
 		return obj;
 		
 	}
