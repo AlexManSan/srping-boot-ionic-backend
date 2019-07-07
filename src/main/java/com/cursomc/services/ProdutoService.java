@@ -30,6 +30,7 @@ public class ProdutoService {
 	 * @return
 	 */
 	public Produto find(Long id) {
+		System.out.println("ID recebido: " + id);
 		// buscando por id e transformando em optional
 		Optional<Produto> obj = dao.findById(id); 
 		
