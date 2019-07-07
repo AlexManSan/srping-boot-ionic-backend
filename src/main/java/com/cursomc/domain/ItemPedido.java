@@ -48,6 +48,10 @@ public class ItemPedido implements Serializable {
 		this.preco = preco;
 	}
 	
+	public double getSubTotal() {
+		return (preco - desconto) * quantidade; 
+	}
+	
 	/**
 	 * Com esses gets criados de pedido e produto eu já acesso direto o pedido e o produto
 	 * 
