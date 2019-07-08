@@ -82,7 +82,10 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		itemRepo.saveAll(obj.getItens());
-		emailService.envioEmailConfirmacaoPedido(obj);
+		// envio sem html
+//		emailService.envioEmailConfirmacaoPedido(obj);
+		// envio com html
+		emailService.sendOrderConfirmationHtmlEmail(obj);
 		return obj;
 		
 	}
