@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.cursomc.services.DBService;
+import com.cursomc.services.EmailService;
+import com.cursomc.services.MockEmailService;
 
 @Configuration
 @Profile("test")
@@ -16,9 +18,23 @@ public class TestConfig {
 	@Autowired
 	private DBService dbService;
 
+	/**
+	 * Método que faz toda as criações dos itens de banco de dados e seus relacionamentos com os dados
+	 * @return
+	 * @throws ParseException
+	 */
 	@Bean
 	public boolean instantiateDatabase() throws ParseException {
 		dbService.instantiateTestDatabase();
 		return true;
+	}
+	
+	/**
+	 * Por ser a implementação test neste método eu informo qual Classe será implementada o emailService
+	 * @return
+	 */
+	@Bean
+	public EmailService emailService() {
+		return new MockEmailService();
 	}
 }

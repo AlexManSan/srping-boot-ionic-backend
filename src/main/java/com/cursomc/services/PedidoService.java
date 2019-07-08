@@ -37,6 +37,9 @@ public class PedidoService {
 	@Autowired
 	private ClienteService clienteService;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	/**
 	 * Método busca o objeto no banco e dispara um excessão caso não exista
 	 * @param id
@@ -79,7 +82,7 @@ public class PedidoService {
 			ip.setPedido(obj);
 		}
 		itemRepo.saveAll(obj.getItens());
-		System.out.println(obj);
+		emailService.envioEmailConfirmacaoPedido(obj);
 		return obj;
 		
 	}
