@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -25,6 +26,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
  */
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true) //vai permitir colocar anotações de perfis nos endpoints
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Autowired
@@ -41,6 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	// vetor com caminhos liberados somente para leitura get
 	private static final String[] PUBLIC_MATCHERS_GET = { "/produtos/**", "/categorias/**" };
+	
+	// vetor com caminhos liberados somente para leitura post
+	private static final String[] PUBLIC_MATCHERS_POST = { "/clientes/**" };
+
 
 	// sobrescrever um método do WebSecurityConfigurerAdapter configure
 	@Override
@@ -51,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		}
 		http.cors().and().csrf().disable();
 		http.authorizeRequests()
+			.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
 			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll() // permite o vetor somente para o metodo get
 			.antMatchers(PUBLIC_MATCHERS).permitAll() // permite o vetor
 			.anyRequest().authenticated(); // para todo o restante autenticar
