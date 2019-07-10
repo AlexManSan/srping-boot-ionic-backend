@@ -1,4 +1,4 @@
-package com.cursomc.services;
+package com.cursomc.email;
 
 import java.util.Date;
 

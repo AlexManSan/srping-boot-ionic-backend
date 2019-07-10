@@ -10,6 +10,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 /**
  * Esta classe de configuração será executada no carregamento da aplicação
+ * 
+ * classe responsável por registrar as subclasses de pagamento ao carregar o sistema devido as anotações criadas nas subclasses
+ * 
+ *  @JsonTypeName("pagamentoComBoleto")
+ *	public class PagamentoComBoleto extends Pagamento {
+ *
+ *	@JsonTypeName("pagamentoComCartao")
+ *	public class PagamentoComCartao extends Pagamento {
+ *
  * @author Alex
  *
  */
@@ -19,6 +28,7 @@ public class JacksonConfig {
 	@Bean
 	public Jackson2ObjectMapperBuilder objectMapperBuilder() {
 		Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder() {
+			
 			public void configure(ObjectMapper objectMapper) {
 				objectMapper.registerSubtypes(PagamentoComCartao.class);
 				objectMapper.registerSubtypes(PagamentoComBoleto.class);

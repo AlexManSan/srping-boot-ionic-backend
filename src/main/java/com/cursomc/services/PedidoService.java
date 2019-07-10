@@ -11,6 +11,7 @@ import com.cursomc.domain.ItemPedido;
 import com.cursomc.domain.PagamentoComBoleto;
 import com.cursomc.domain.Pedido;
 import com.cursomc.domain.enums.EstadoPagamento;
+import com.cursomc.email.EmailService;
 import com.cursomc.exceptions.ObjectNotFoundException;
 import com.cursomc.repositories.ItemPedidoRepository;
 import com.cursomc.repositories.PagamentoRepository;

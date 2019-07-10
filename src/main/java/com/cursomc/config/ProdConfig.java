@@ -4,9 +4,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
-import com.cursomc.services.EmailService;
-import com.cursomc.services.SmtpEmailService;
+import com.cursomc.email.EmailService;
+import com.cursomc.email.SmtpEmailService;
 
+/**
+ * Classe responsável por carregar as informações do arquivo de persistência application-prod.properties
+ * @author Alex
+ *
+ */
 @Configuration
 @Profile("prod")
 public class ProdConfig {
