@@ -56,6 +56,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.anyRequest().authenticated(); // para todo o restante autenticar
 		
 		http.addFilter(new JWTAuthenticationFilter(authenticationManager(), jwtUtil)); // autenticationManager() ja pertence a classe extendida WebSecurityConfigurerAdapter
+		http.addFilter(new JWTAuthorizationFilter(authenticationManager(), jwtUtil, userDetailsService));
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
