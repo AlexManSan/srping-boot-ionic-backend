@@ -15,13 +15,17 @@ import org.springframework.transaction.annotation.Transactional;
 import com.cursomc.domain.Cidade;
 import com.cursomc.domain.Cliente;
 import com.cursomc.domain.Endereco;
+import com.cursomc.domain.enums.Perfil;
 import com.cursomc.domain.enums.TipoCliente;
 import com.cursomc.dto.ClienteDTO;
 import com.cursomc.dto.ClienteNewDTO;
+import com.cursomc.exceptions.AuthorizationException;
 import com.cursomc.exceptions.DataIntegrityException;
 import com.cursomc.exceptions.ObjectNotFoundException;
 import com.cursomc.repositories.ClienteRepository;
 import com.cursomc.repositories.EnderecoRepository;
+import com.cursomc.security.UserService;
+import com.cursomc.security.UserSpringSecurity;
 
 @Service
 public class ClienteService {
@@ -49,6 +53,12 @@ public class ClienteService {
 	 * @return
 	 */
 	public Cliente find(Long id) {
+		// pegando usuario logado
+		UserSpringSecurity user = UserService.autenticado();
+		if(user == null || !user.possuiPerfil(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado, usuário não possui permissão");
+		}
+		
 		// buscando por id e transformando em optional
 		Optional<Cliente> obj = dao.findById(id); 
 		
