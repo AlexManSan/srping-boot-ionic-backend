@@ -75,8 +75,15 @@ public class ClienteResource {
 
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<Cliente> find(@PathVariable Long id) {
-		System.out.println(">>>>> Rest busca uma Cliente por id");
+		System.out.println(">>>>> Rest busca um Cliente por id");
 		Cliente obj = service.find(id);
+		return ResponseEntity.ok().body(obj);
+	}
+	
+	@GetMapping(value = "/email")
+	public ResponseEntity<Cliente> find(@RequestParam(value = "value") String email) {
+		System.out.println(">>>>> Rest busca um Cliente por email");
+		Cliente obj = service.findByEmail(email);
 		return ResponseEntity.ok().body(obj);
 	}
 

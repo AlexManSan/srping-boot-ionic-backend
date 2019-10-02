@@ -117,6 +117,22 @@ public class ClienteService {
 		}		
 	}
 	
+	/**
+	 * Busca um Cliente por email
+	 * @param email
+	 * @return
+	 */
+	public Cliente findByEmail(String email) {
+		UserSpringSecurity user = UserService.autenticado();
+		if(user == null || !user.possuiPerfil(Perfil.ADMIN) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso Negado");
+		}
+		Cliente obj = dao.findByEmail(email);
+		if(obj == null) {
+			throw new ObjectNotFoundException("Objeto não encontrado! Id: " +user.getId() + ", Tipo: " + Cliente.class.getName());
+		}
+		return obj;
+	}
 
 	/**
 	 * Método que retorna informações por página.
